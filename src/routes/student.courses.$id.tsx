@@ -44,7 +44,7 @@ function CourseDetail() {
         <p className="mt-4 text-sm leading-6 text-foreground/90">{course.description}</p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {course.skills.map((s) => (
+          {course.skills.map((s: string) => (
             <span
               key={s}
               className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground"

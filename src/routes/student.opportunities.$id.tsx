@@ -21,7 +21,7 @@ function OpportunityDetail() {
   const completedIds = new Set(
     enrollments.filter((e) => e.progress >= 100).map((e) => e.courseId),
   );
-  const qualified = op.requiredCourses.every((c) => completedIds.has(c));
+  const qualified = op.requiredCourses.every((c: string) => completedIds.has(c));
   const applied = applications.some((a) => a.opportunityId === op.id);
 
   return (
@@ -55,7 +55,7 @@ function OpportunityDetail() {
           Required programs
         </h2>
         <ul className="mt-2 space-y-2">
-          {op.requiredCourses.map((cid) => {
+          {op.requiredCourses.map((cid: string) => {
             const c = courses.find((x) => x.id === cid);
             const done = completedIds.has(cid);
             if (!c) return null;
