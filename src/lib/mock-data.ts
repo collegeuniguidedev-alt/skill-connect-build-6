@@ -6,6 +6,7 @@ export type Course = {
   company: string;
   description: string;
   skills: string[];
+  cover: string;
 };
 
 export type Opportunity = {
@@ -20,7 +21,7 @@ export type Opportunity = {
 
 export type Enrollment = {
   courseId: string;
-  progress: number; // 0-100
+  progress: number;
   score?: number;
 };
 
@@ -50,6 +51,7 @@ export const courses: Course[] = [
     description:
       "Step into the shoes of a data analyst. Design a working KPI dashboard from a real product brief.",
     skills: ["Data Viz", "Figma", "SQL"],
+    cover: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=70",
   },
   {
     id: "c_sql_basics",
@@ -59,6 +61,7 @@ export const courses: Course[] = [
     company: "Acme Analytics",
     description: "Learn the SQL fundamentals analysts use every day: SELECT, JOIN, GROUP BY, CTEs.",
     skills: ["SQL"],
+    cover: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=1200&q=70",
   },
   {
     id: "c_pd_sprint",
@@ -68,6 +71,7 @@ export const courses: Course[] = [
     company: "Northwind Studio",
     description: "Run a 5-day design sprint against a real client prompt.",
     skills: ["UX", "Figma", "Research"],
+    cover: "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&q=70",
   },
   {
     id: "c_robotics",
@@ -77,6 +81,7 @@ export const courses: Course[] = [
     company: "Forge Robotics",
     description: "Mechatronics fundamentals: sensors, actuators, and control loops.",
     skills: ["Python", "ROS"],
+    cover: "https://images.unsplash.com/photo-1581090700227-1e8e0d3a0a3f?auto=format&fit=crop&w=1200&q=70",
   },
   {
     id: "c_ml_intro",
@@ -86,6 +91,7 @@ export const courses: Course[] = [
     company: "Helix AI",
     description: "Train, evaluate, and ship supervised models with scikit-learn and PyTorch.",
     skills: ["Python", "ML"],
+    cover: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=70",
   },
 ];
 
@@ -145,17 +151,31 @@ export const initialEnrollments: Enrollment[] = [
 
 export const initialApplications: Application[] = [];
 
+export type RosterEntry = {
+  id: string;
+  name: string;
+  major: string;
+  year: string;
+  activity: string;
+  status: string;
+  progress: number;
+};
+
 export const college = {
   name: "Riverside University",
   description: "A public research university.",
   roster: [
-    { name: "Maya Patel", major: "Computer Science", activity: "Dashboard Design Simulation", status: "in_progress · 60%" },
-    { name: "Leo Garcia", major: "Design", activity: "Product Design Sprint Simulation", status: "completed · 100%" },
-    { name: "Aria Chen", major: "Mechanical Engineering", activity: "Intro to Robotics", status: "in_progress · 35%" },
-  ],
+    { id: "r_maya", name: "Maya Patel", major: "Computer Science", year: "Junior", activity: "Dashboard Design Simulation", status: "in_progress", progress: 60 },
+    { id: "r_leo", name: "Leo Garcia", major: "Design", year: "Senior", activity: "Product Design Sprint Simulation", status: "completed", progress: 100 },
+    { id: "r_aria", name: "Aria Chen", major: "Mechanical Engineering", year: "Sophomore", activity: "Intro to Robotics", status: "in_progress", progress: 35 },
+  ] as RosterEntry[],
 };
 
 export const company = {
   name: "Acme Analytics",
   description: "We help teams make better decisions with data.",
+  students: [
+    { id: "cs_maya", name: "Maya Patel", program: "SQL for Analysts", status: "completed · 100%", score: 86 },
+    { id: "cs_jon", name: "Jon Park", program: "Dashboard Design Simulation", status: "in_progress · 40%" },
+  ],
 };

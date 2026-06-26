@@ -64,52 +64,66 @@ function Discover() {
           return (
             <div
               key={c.id}
-              className="rounded-xl border border-border bg-card p-5 shadow-sm"
+              className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md"
             >
-              <div className="flex flex-wrap gap-2">
-                <span className="rounded-full bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800 capitalize">
-                  {c.type}
-                </span>
-                <span className="rounded-full border border-border bg-background px-2.5 py-0.5 text-xs">
-                  {c.level}
-                </span>
-              </div>
               <Link
                 to="/student/courses/$id"
                 params={{ id: c.id }}
-                className="mt-3 block text-lg font-semibold hover:underline"
+                className="block aspect-[16/9] w-full overflow-hidden bg-secondary"
               >
-                {c.title}
+                <img
+                  src={c.cover}
+                  alt={c.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                />
               </Link>
-              <div className="text-sm text-muted-foreground">{c.company}</div>
-              <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {c.skills.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground"
-                  >
-                    {s}
+              <div className="p-5">
+                <div className="flex flex-wrap gap-2">
+                  <span className="rounded-full bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800 capitalize">
+                    {c.type}
                   </span>
-                ))}
-              </div>
-              <div className="mt-4">
-                {enrolled ? (
-                  <Link
-                    to="/student/courses/$id"
-                    params={{ id: c.id }}
-                    className="inline-flex h-9 items-center justify-center rounded-md border border-border bg-background px-4 text-sm font-medium hover:bg-accent"
-                  >
-                    Continue
-                  </Link>
-                ) : (
-                  <button
-                    onClick={() => enroll(c.id)}
-                    className="inline-flex h-9 items-center justify-center rounded-md bg-foreground px-4 text-sm font-medium text-background hover:bg-foreground/90"
-                  >
-                    Enroll
-                  </button>
-                )}
+                  <span className="rounded-full border border-border bg-background px-2.5 py-0.5 text-xs">
+                    {c.level}
+                  </span>
+                </div>
+                <Link
+                  to="/student/courses/$id"
+                  params={{ id: c.id }}
+                  className="mt-3 block text-lg font-semibold hover:underline"
+                >
+                  {c.title}
+                </Link>
+                <div className="text-sm text-muted-foreground">{c.company}</div>
+                <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {c.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-4">
+                  {enrolled ? (
+                    <Link
+                      to="/student/courses/$id"
+                      params={{ id: c.id }}
+                      className="inline-flex h-9 items-center justify-center rounded-md border border-border bg-background px-4 text-sm font-medium hover:bg-accent"
+                    >
+                      Continue
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => enroll(c.id)}
+                      className="inline-flex h-9 items-center justify-center rounded-md bg-foreground px-4 text-sm font-medium text-background hover:bg-foreground/90"
+                    >
+                      Enroll
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           );
