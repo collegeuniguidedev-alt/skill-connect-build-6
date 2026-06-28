@@ -118,6 +118,11 @@ function Discover() {
                     </span>
                   ))}
                 </div>
+                {unlockLabel && (
+                  <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900">
+                    🔒 Complete this {c.type} to unlock {unlockLabel} at {c.company}.
+                  </div>
+                )}
                 <div className="mt-4">
                   {enrolled ? (
                     <Link
