@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus, Users, GraduationCap, Award } from "lucide-react";
+import { Plus, Users, Award } from "lucide-react";
 import { useAppState } from "@/lib/app-state";
 import { company, courses, opportunities } from "@/lib/mock-data";
 
