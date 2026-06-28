@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { Plus, Users, Award } from "lucide-react";
 import { useAppState } from "@/lib/app-state";
 import { company, courses, opportunities } from "@/lib/mock-data";
 
@@ -52,6 +52,59 @@ function CompanyOverview() {
         <Stat label="Completion rate" value={`${completionRate}%`} />
         <Stat label="Applications" value={apps} />
       </div>
+
+      <section className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm md:col-span-1">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            <Users className="size-4" /> Qualified students
+          </div>
+          <div className="mt-2 flex items-baseline gap-2">
+            <div className="text-4xl font-semibold text-sky-700">{company.qualifiedPool.qualified}</div>
+            <div className="text-sm text-muted-foreground">of {company.qualifiedPool.total} in pool</div>
+          </div>
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-secondary">
+            <div
+              className="h-full bg-sky-500"
+              style={{ width: `${(company.qualifiedPool.qualified / company.qualifiedPool.total) * 100}%` }}
+            />
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            <span className="font-medium text-foreground">Criteria:</span> {company.qualifiedPool.criteria}
+          </p>
+          <Link
+            to="/company/students"
+            className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-sky-700 hover:underline"
+          >
+            View qualified list →
+          </Link>
+        </div>
+
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm md:col-span-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+              <Award className="size-4" /> Assessment scores
+            </div>
+            <span className="text-xs text-muted-foreground">avg across qualified pool</span>
+          </div>
+          <div className="mt-4 grid gap-3">
+            {company.assessments.map((a) => (
+              <div key={a.key}>
+                <div className="flex items-center justify-between text-sm">
+                  <div>
+                    <span className="font-medium">{a.label}</span>
+                    <span className="ml-2 text-xs text-muted-foreground">{a.description}</span>
+                  </div>
+                  <span className="font-semibold text-sky-700">{a.score}</span>
+                </div>
+                <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-secondary">
+                  <div className="h-full bg-sky-500" style={{ width: `${a.score}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       <div className="grid gap-8 md:grid-cols-2">
         <section>

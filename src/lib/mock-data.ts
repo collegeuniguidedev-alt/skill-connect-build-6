@@ -171,6 +171,13 @@ export const college = {
   ] as RosterEntry[],
 };
 
+export type AssessmentDimension = {
+  key: string;
+  label: string;
+  score: number; // 0-100, average across qualified pool
+  description: string;
+};
+
 export const company = {
   name: "Acme Analytics",
   description: "We help teams make better decisions with data.",
@@ -178,4 +185,39 @@ export const company = {
     { id: "cs_maya", name: "Maya Patel", program: "SQL for Analysts", status: "completed · 100%", score: 86 },
     { id: "cs_jon", name: "Jon Park", program: "Dashboard Design Simulation", status: "in_progress · 40%" },
   ],
+  // Talent pool snapshot used on the company dashboard.
+  qualifiedPool: {
+    total: 142,
+    qualified: 38,
+    criteria: "Completed SQL for Analysts + Dashboard Design Simulation with score ≥ 75",
+  },
+  assessments: [
+    { key: "academics", label: "Academics", score: 82, description: "GPA, coursework rigor, transcripts" },
+    { key: "jobReadiness", label: "Job readiness", score: 71, description: "Simulation performance on real work briefs" },
+    { key: "technical", label: "Technical skills", score: 78, description: "SQL, data modeling, dashboarding tasks" },
+    { key: "communication", label: "Communication", score: 74, description: "Written submissions and stakeholder updates" },
+    { key: "collaboration", label: "Collaboration", score: 80, description: "Peer reviews on group sprints" },
+  ] as AssessmentDimension[],
+};
+
+export type DepartmentOutcome = {
+  department: string;
+  students: number;
+  placementReady: number; // %
+  internshipPlaced: number; // %
+  attendance: number; // %
+  assignmentsCompleted: number; // %
+};
+
+export const collegeOutcomes = {
+  placementReadiness: 64, // % of seniors meeting placement criteria
+  internshipPlacement: 48, // % with confirmed internship
+  attendance: 91, // overall attendance %
+  assignmentCompletion: 87, // overall %
+  departments: [
+    { department: "Computer Science", students: 84, placementReady: 72, internshipPlaced: 58, attendance: 93, assignmentsCompleted: 90 },
+    { department: "Design", students: 41, placementReady: 65, internshipPlaced: 51, attendance: 89, assignmentsCompleted: 88 },
+    { department: "Mechanical Engineering", students: 67, placementReady: 54, internshipPlaced: 38, attendance: 90, assignmentsCompleted: 82 },
+    { department: "Business", students: 95, placementReady: 61, internshipPlaced: 44, attendance: 92, assignmentsCompleted: 86 },
+  ] as DepartmentOutcome[],
 };

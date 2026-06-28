@@ -62,6 +62,24 @@ function StudentHome() {
     : undefined;
   const currentProgress = inProgress[0]?.progress ?? 0;
 
+  // What this course unlocks once completed.
+  const unlocks = current
+    ? opportunities.filter((o) => o.requiredCourses.includes(current.id))
+    : [];
+  const unlockedJobs = unlocks.filter((o) => o.type === "job").length;
+  const unlockedInternships = unlocks.filter((o) => o.type === "internship").length;
+  const unlockLabel =
+    unlocks.length === 0
+      ? null
+      : [
+          unlockedInternships > 0
+            ? `${unlockedInternships} internship${unlockedInternships > 1 ? "s" : ""}`
+            : null,
+          unlockedJobs > 0 ? `${unlockedJobs} job interview${unlockedJobs > 1 ? "s" : ""}` : null,
+        ]
+          .filter(Boolean)
+          .join(" + ");
+
   return (
     <div className="space-y-10">
       <div>
@@ -106,7 +124,14 @@ function StudentHome() {
                 style={{ width: `${currentProgress}%` }}
               />
             </div>
-            <div className="mt-2 text-xs text-muted-foreground">{currentProgress}% complete</div>
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span className="text-muted-foreground">{currentProgress}% complete</span>
+              {unlockLabel && (
+                <span className="rounded-full bg-amber-100 px-2.5 py-0.5 font-medium text-amber-800">
+                  🔒 Finish to unlock {unlockLabel}
+                </span>
+              )}
+            </div>
           </Link>
         ) : (
           <div className="rounded-xl border border-dashed border-border p-6 text-sm text-muted-foreground">
@@ -118,6 +143,7 @@ function StudentHome() {
           </div>
         )}
       </section>
+
 
       <section>
         <SectionHeader icon={Briefcase} title="Matched for you" to="/student/opportunities" />

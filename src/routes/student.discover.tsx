@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useAppState } from "@/lib/app-state";
-import { courses } from "@/lib/mock-data";
+import { courses, opportunities } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/student/discover")({
   head: () => ({ meta: [{ title: "Discover · LaunchPad" }] }),
@@ -61,6 +61,18 @@ function Discover() {
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((c) => {
           const enrolled = enrollments.some((e) => e.courseId === c.id);
+          const unlocks = opportunities.filter((o) => o.requiredCourses.includes(c.id));
+          const jobs = unlocks.filter((o) => o.type === "job").length;
+          const interns = unlocks.filter((o) => o.type === "internship").length;
+          const unlockLabel =
+            unlocks.length === 0
+              ? null
+              : [
+                  interns > 0 ? `${interns} internship${interns > 1 ? "s" : ""}` : null,
+                  jobs > 0 ? `${jobs} interview${jobs > 1 ? "s" : ""}` : null,
+                ]
+                  .filter(Boolean)
+                  .join(" + ");
           return (
             <div
               key={c.id}
@@ -106,6 +118,11 @@ function Discover() {
                     </span>
                   ))}
                 </div>
+                {unlockLabel && (
+                  <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900">
+                    🔒 Complete this {c.type} to unlock {unlockLabel} at {c.company}.
+                  </div>
+                )}
                 <div className="mt-4">
                   {enrolled ? (
                     <Link
