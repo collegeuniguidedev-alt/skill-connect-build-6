@@ -61,6 +61,18 @@ function Discover() {
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((c) => {
           const enrolled = enrollments.some((e) => e.courseId === c.id);
+          const unlocks = opportunities.filter((o) => o.requiredCourses.includes(c.id));
+          const jobs = unlocks.filter((o) => o.type === "job").length;
+          const interns = unlocks.filter((o) => o.type === "internship").length;
+          const unlockLabel =
+            unlocks.length === 0
+              ? null
+              : [
+                  interns > 0 ? `${interns} internship${interns > 1 ? "s" : ""}` : null,
+                  jobs > 0 ? `${jobs} interview${jobs > 1 ? "s" : ""}` : null,
+                ]
+                  .filter(Boolean)
+                  .join(" + ");
           return (
             <div
               key={c.id}
