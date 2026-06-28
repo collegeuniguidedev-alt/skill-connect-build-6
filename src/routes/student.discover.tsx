@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useAppState } from "@/lib/app-state";
-import { courses } from "@/lib/mock-data";
+import { courses, opportunities } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/student/discover")({
   head: () => ({ meta: [{ title: "Discover · LaunchPad" }] }),
