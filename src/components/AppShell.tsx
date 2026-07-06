@@ -71,9 +71,14 @@ function Header({ persona }: { persona: Persona }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex size-8 items-center justify-center rounded-md bg-foreground text-background font-semibold">
-            L
+            S
           </div>
-          <span className="font-semibold tracking-tight">LaunchPad</span>
+          <div className="leading-tight">
+            <div className="font-semibold tracking-tight">SkillTern</div>
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              Internship Ops
+            </div>
+          </div>
         </Link>
         <PersonaSwitch active={persona} />
         <PersonaBadge persona={persona} />
