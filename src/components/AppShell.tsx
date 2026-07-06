@@ -110,8 +110,7 @@ function Footer() {
   return (
     <footer className="mt-16 border-t border-border py-6">
       <div className="mx-auto max-w-6xl px-6 text-xs text-muted-foreground">
-        LaunchPad — connecting students, colleges, and companies through courses, simulations, and
-        real opportunities.
+        SkillTern — AI-powered Internship Operations & Monitoring Platform for companies, colleges, and students.
       </div>
     </footer>
   );
@@ -120,6 +119,7 @@ function Footer() {
 const navByPersona: Record<Persona, { label: string; to: string; exact?: boolean }[]> = {
   student: [
     { label: "Home", to: "/student", exact: true },
+    { label: "My Internship", to: "/student/internship" },
     { label: "Discover", to: "/student/discover" },
     { label: "My Learning", to: "/student/learning" },
     { label: "Opportunities", to: "/student/opportunities" },
@@ -127,6 +127,7 @@ const navByPersona: Record<Persona, { label: string; to: string; exact?: boolean
   ],
   company: [
     { label: "Overview", to: "/company", exact: true },
+    { label: "Interns Ops", to: "/company/interns" },
     { label: "Courses & Sims", to: "/company/courses" },
     { label: "Opportunities", to: "/company/opportunities" },
     { label: "Students", to: "/company/students" },
@@ -134,6 +135,7 @@ const navByPersona: Record<Persona, { label: string; to: string; exact?: boolean
   ],
   college: [
     { label: "Overview", to: "/college", exact: true },
+    { label: "Internship Monitor", to: "/college/internships" },
     { label: "Students", to: "/college/students" },
     { label: "Analytics", to: "/college/analytics" },
   ],
