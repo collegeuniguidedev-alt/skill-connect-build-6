@@ -18,13 +18,16 @@ import { Route as CompanyIndexRouteImport } from './routes/company.index'
 import { Route as CollegeIndexRouteImport } from './routes/college.index'
 import { Route as StudentOpportunitiesRouteImport } from './routes/student.opportunities'
 import { Route as StudentLearningRouteImport } from './routes/student.learning'
+import { Route as StudentInternshipRouteImport } from './routes/student.internship'
 import { Route as StudentDiscoverRouteImport } from './routes/student.discover'
 import { Route as StudentApplicationsRouteImport } from './routes/student.applications'
 import { Route as CompanyStudentsRouteImport } from './routes/company.students'
 import { Route as CompanyOpportunitiesRouteImport } from './routes/company.opportunities'
+import { Route as CompanyInternsRouteImport } from './routes/company.interns'
 import { Route as CompanyCoursesRouteImport } from './routes/company.courses'
 import { Route as CompanyAnalyticsRouteImport } from './routes/company.analytics'
 import { Route as CollegeStudentsRouteImport } from './routes/college.students'
+import { Route as CollegeInternshipsRouteImport } from './routes/college.internships'
 import { Route as CollegeAnalyticsRouteImport } from './routes/college.analytics'
 import { Route as StudentOpportunitiesIdRouteImport } from './routes/student.opportunities.$id'
 import { Route as StudentCoursesIdRouteImport } from './routes/student.courses.$id'
@@ -74,6 +77,11 @@ const StudentLearningRoute = StudentLearningRouteImport.update({
   path: '/learning',
   getParentRoute: () => StudentRoute,
 } as any)
+const StudentInternshipRoute = StudentInternshipRouteImport.update({
+  id: '/internship',
+  path: '/internship',
+  getParentRoute: () => StudentRoute,
+} as any)
 const StudentDiscoverRoute = StudentDiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
@@ -94,6 +102,11 @@ const CompanyOpportunitiesRoute = CompanyOpportunitiesRouteImport.update({
   path: '/opportunities',
   getParentRoute: () => CompanyRoute,
 } as any)
+const CompanyInternsRoute = CompanyInternsRouteImport.update({
+  id: '/interns',
+  path: '/interns',
+  getParentRoute: () => CompanyRoute,
+} as any)
 const CompanyCoursesRoute = CompanyCoursesRouteImport.update({
   id: '/courses',
   path: '/courses',
@@ -107,6 +120,11 @@ const CompanyAnalyticsRoute = CompanyAnalyticsRouteImport.update({
 const CollegeStudentsRoute = CollegeStudentsRouteImport.update({
   id: '/students',
   path: '/students',
+  getParentRoute: () => CollegeRoute,
+} as any)
+const CollegeInternshipsRoute = CollegeInternshipsRouteImport.update({
+  id: '/internships',
+  path: '/internships',
   getParentRoute: () => CollegeRoute,
 } as any)
 const CollegeAnalyticsRoute = CollegeAnalyticsRouteImport.update({
@@ -131,13 +149,16 @@ export interface FileRoutesByFullPath {
   '/company': typeof CompanyRouteWithChildren
   '/student': typeof StudentRouteWithChildren
   '/college/analytics': typeof CollegeAnalyticsRoute
+  '/college/internships': typeof CollegeInternshipsRoute
   '/college/students': typeof CollegeStudentsRoute
   '/company/analytics': typeof CompanyAnalyticsRoute
   '/company/courses': typeof CompanyCoursesRoute
+  '/company/interns': typeof CompanyInternsRoute
   '/company/opportunities': typeof CompanyOpportunitiesRoute
   '/company/students': typeof CompanyStudentsRoute
   '/student/applications': typeof StudentApplicationsRoute
   '/student/discover': typeof StudentDiscoverRoute
+  '/student/internship': typeof StudentInternshipRoute
   '/student/learning': typeof StudentLearningRoute
   '/student/opportunities': typeof StudentOpportunitiesRouteWithChildren
   '/college/': typeof CollegeIndexRoute
@@ -149,13 +170,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/college/analytics': typeof CollegeAnalyticsRoute
+  '/college/internships': typeof CollegeInternshipsRoute
   '/college/students': typeof CollegeStudentsRoute
   '/company/analytics': typeof CompanyAnalyticsRoute
   '/company/courses': typeof CompanyCoursesRoute
+  '/company/interns': typeof CompanyInternsRoute
   '/company/opportunities': typeof CompanyOpportunitiesRoute
   '/company/students': typeof CompanyStudentsRoute
   '/student/applications': typeof StudentApplicationsRoute
   '/student/discover': typeof StudentDiscoverRoute
+  '/student/internship': typeof StudentInternshipRoute
   '/student/learning': typeof StudentLearningRoute
   '/student/opportunities': typeof StudentOpportunitiesRouteWithChildren
   '/college': typeof CollegeIndexRoute
@@ -171,13 +195,16 @@ export interface FileRoutesById {
   '/company': typeof CompanyRouteWithChildren
   '/student': typeof StudentRouteWithChildren
   '/college/analytics': typeof CollegeAnalyticsRoute
+  '/college/internships': typeof CollegeInternshipsRoute
   '/college/students': typeof CollegeStudentsRoute
   '/company/analytics': typeof CompanyAnalyticsRoute
   '/company/courses': typeof CompanyCoursesRoute
+  '/company/interns': typeof CompanyInternsRoute
   '/company/opportunities': typeof CompanyOpportunitiesRoute
   '/company/students': typeof CompanyStudentsRoute
   '/student/applications': typeof StudentApplicationsRoute
   '/student/discover': typeof StudentDiscoverRoute
+  '/student/internship': typeof StudentInternshipRoute
   '/student/learning': typeof StudentLearningRoute
   '/student/opportunities': typeof StudentOpportunitiesRouteWithChildren
   '/college/': typeof CollegeIndexRoute
@@ -194,13 +221,16 @@ export interface FileRouteTypes {
     | '/company'
     | '/student'
     | '/college/analytics'
+    | '/college/internships'
     | '/college/students'
     | '/company/analytics'
     | '/company/courses'
+    | '/company/interns'
     | '/company/opportunities'
     | '/company/students'
     | '/student/applications'
     | '/student/discover'
+    | '/student/internship'
     | '/student/learning'
     | '/student/opportunities'
     | '/college/'
@@ -212,13 +242,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/college/analytics'
+    | '/college/internships'
     | '/college/students'
     | '/company/analytics'
     | '/company/courses'
+    | '/company/interns'
     | '/company/opportunities'
     | '/company/students'
     | '/student/applications'
     | '/student/discover'
+    | '/student/internship'
     | '/student/learning'
     | '/student/opportunities'
     | '/college'
@@ -233,13 +266,16 @@ export interface FileRouteTypes {
     | '/company'
     | '/student'
     | '/college/analytics'
+    | '/college/internships'
     | '/college/students'
     | '/company/analytics'
     | '/company/courses'
+    | '/company/interns'
     | '/company/opportunities'
     | '/company/students'
     | '/student/applications'
     | '/student/discover'
+    | '/student/internship'
     | '/student/learning'
     | '/student/opportunities'
     | '/college/'
@@ -321,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentLearningRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/student/internship': {
+      id: '/student/internship'
+      path: '/internship'
+      fullPath: '/student/internship'
+      preLoaderRoute: typeof StudentInternshipRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/student/discover': {
       id: '/student/discover'
       path: '/discover'
@@ -349,6 +392,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompanyOpportunitiesRouteImport
       parentRoute: typeof CompanyRoute
     }
+    '/company/interns': {
+      id: '/company/interns'
+      path: '/interns'
+      fullPath: '/company/interns'
+      preLoaderRoute: typeof CompanyInternsRouteImport
+      parentRoute: typeof CompanyRoute
+    }
     '/company/courses': {
       id: '/company/courses'
       path: '/courses'
@@ -368,6 +418,13 @@ declare module '@tanstack/react-router' {
       path: '/students'
       fullPath: '/college/students'
       preLoaderRoute: typeof CollegeStudentsRouteImport
+      parentRoute: typeof CollegeRoute
+    }
+    '/college/internships': {
+      id: '/college/internships'
+      path: '/internships'
+      fullPath: '/college/internships'
+      preLoaderRoute: typeof CollegeInternshipsRouteImport
       parentRoute: typeof CollegeRoute
     }
     '/college/analytics': {
@@ -396,12 +453,14 @@ declare module '@tanstack/react-router' {
 
 interface CollegeRouteChildren {
   CollegeAnalyticsRoute: typeof CollegeAnalyticsRoute
+  CollegeInternshipsRoute: typeof CollegeInternshipsRoute
   CollegeStudentsRoute: typeof CollegeStudentsRoute
   CollegeIndexRoute: typeof CollegeIndexRoute
 }
 
 const CollegeRouteChildren: CollegeRouteChildren = {
   CollegeAnalyticsRoute: CollegeAnalyticsRoute,
+  CollegeInternshipsRoute: CollegeInternshipsRoute,
   CollegeStudentsRoute: CollegeStudentsRoute,
   CollegeIndexRoute: CollegeIndexRoute,
 }
@@ -412,6 +471,7 @@ const CollegeRouteWithChildren =
 interface CompanyRouteChildren {
   CompanyAnalyticsRoute: typeof CompanyAnalyticsRoute
   CompanyCoursesRoute: typeof CompanyCoursesRoute
+  CompanyInternsRoute: typeof CompanyInternsRoute
   CompanyOpportunitiesRoute: typeof CompanyOpportunitiesRoute
   CompanyStudentsRoute: typeof CompanyStudentsRoute
   CompanyIndexRoute: typeof CompanyIndexRoute
@@ -420,6 +480,7 @@ interface CompanyRouteChildren {
 const CompanyRouteChildren: CompanyRouteChildren = {
   CompanyAnalyticsRoute: CompanyAnalyticsRoute,
   CompanyCoursesRoute: CompanyCoursesRoute,
+  CompanyInternsRoute: CompanyInternsRoute,
   CompanyOpportunitiesRoute: CompanyOpportunitiesRoute,
   CompanyStudentsRoute: CompanyStudentsRoute,
   CompanyIndexRoute: CompanyIndexRoute,
@@ -442,6 +503,7 @@ const StudentOpportunitiesRouteWithChildren =
 interface StudentRouteChildren {
   StudentApplicationsRoute: typeof StudentApplicationsRoute
   StudentDiscoverRoute: typeof StudentDiscoverRoute
+  StudentInternshipRoute: typeof StudentInternshipRoute
   StudentLearningRoute: typeof StudentLearningRoute
   StudentOpportunitiesRoute: typeof StudentOpportunitiesRouteWithChildren
   StudentIndexRoute: typeof StudentIndexRoute
@@ -451,6 +513,7 @@ interface StudentRouteChildren {
 const StudentRouteChildren: StudentRouteChildren = {
   StudentApplicationsRoute: StudentApplicationsRoute,
   StudentDiscoverRoute: StudentDiscoverRoute,
+  StudentInternshipRoute: StudentInternshipRoute,
   StudentLearningRoute: StudentLearningRoute,
   StudentOpportunitiesRoute: StudentOpportunitiesRouteWithChildren,
   StudentIndexRoute: StudentIndexRoute,
@@ -469,13 +532,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

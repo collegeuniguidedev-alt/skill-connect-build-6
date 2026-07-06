@@ -71,9 +71,14 @@ function Header({ persona }: { persona: Persona }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex size-8 items-center justify-center rounded-md bg-foreground text-background font-semibold">
-            L
+            S
           </div>
-          <span className="font-semibold tracking-tight">LaunchPad</span>
+          <div className="leading-tight">
+            <div className="font-semibold tracking-tight">SkillTern</div>
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              Internship Ops
+            </div>
+          </div>
         </Link>
         <PersonaSwitch active={persona} />
         <PersonaBadge persona={persona} />
@@ -105,8 +110,7 @@ function Footer() {
   return (
     <footer className="mt-16 border-t border-border py-6">
       <div className="mx-auto max-w-6xl px-6 text-xs text-muted-foreground">
-        LaunchPad — connecting students, colleges, and companies through courses, simulations, and
-        real opportunities.
+        SkillTern — AI-powered Internship Operations & Monitoring Platform for companies, colleges, and students.
       </div>
     </footer>
   );
@@ -115,6 +119,7 @@ function Footer() {
 const navByPersona: Record<Persona, { label: string; to: string; exact?: boolean }[]> = {
   student: [
     { label: "Home", to: "/student", exact: true },
+    { label: "My Internship", to: "/student/internship" },
     { label: "Discover", to: "/student/discover" },
     { label: "My Learning", to: "/student/learning" },
     { label: "Opportunities", to: "/student/opportunities" },
@@ -122,6 +127,7 @@ const navByPersona: Record<Persona, { label: string; to: string; exact?: boolean
   ],
   company: [
     { label: "Overview", to: "/company", exact: true },
+    { label: "Interns Ops", to: "/company/interns" },
     { label: "Courses & Sims", to: "/company/courses" },
     { label: "Opportunities", to: "/company/opportunities" },
     { label: "Students", to: "/company/students" },
@@ -129,6 +135,7 @@ const navByPersona: Record<Persona, { label: string; to: string; exact?: boolean
   ],
   college: [
     { label: "Overview", to: "/college", exact: true },
+    { label: "Internship Monitor", to: "/college/internships" },
     { label: "Students", to: "/college/students" },
     { label: "Analytics", to: "/college/analytics" },
   ],
