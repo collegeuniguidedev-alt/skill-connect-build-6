@@ -23,6 +23,7 @@ import { Route as StudentDiscoverRouteImport } from './routes/student.discover'
 import { Route as StudentApplicationsRouteImport } from './routes/student.applications'
 import { Route as CompanyStudentsRouteImport } from './routes/company.students'
 import { Route as CompanyOpportunitiesRouteImport } from './routes/company.opportunities'
+import { Route as CompanyInternsRouteImport } from './routes/company.interns'
 import { Route as CompanyCoursesRouteImport } from './routes/company.courses'
 import { Route as CompanyAnalyticsRouteImport } from './routes/company.analytics'
 import { Route as CollegeStudentsRouteImport } from './routes/college.students'
@@ -100,6 +101,11 @@ const CompanyOpportunitiesRoute = CompanyOpportunitiesRouteImport.update({
   path: '/opportunities',
   getParentRoute: () => CompanyRoute,
 } as any)
+const CompanyInternsRoute = CompanyInternsRouteImport.update({
+  id: '/interns',
+  path: '/interns',
+  getParentRoute: () => CompanyRoute,
+} as any)
 const CompanyCoursesRoute = CompanyCoursesRouteImport.update({
   id: '/courses',
   path: '/courses',
@@ -140,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/college/students': typeof CollegeStudentsRoute
   '/company/analytics': typeof CompanyAnalyticsRoute
   '/company/courses': typeof CompanyCoursesRoute
+  '/company/interns': typeof CompanyInternsRoute
   '/company/opportunities': typeof CompanyOpportunitiesRoute
   '/company/students': typeof CompanyStudentsRoute
   '/student/applications': typeof StudentApplicationsRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/college/students': typeof CollegeStudentsRoute
   '/company/analytics': typeof CompanyAnalyticsRoute
   '/company/courses': typeof CompanyCoursesRoute
+  '/company/interns': typeof CompanyInternsRoute
   '/company/opportunities': typeof CompanyOpportunitiesRoute
   '/company/students': typeof CompanyStudentsRoute
   '/student/applications': typeof StudentApplicationsRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/college/students': typeof CollegeStudentsRoute
   '/company/analytics': typeof CompanyAnalyticsRoute
   '/company/courses': typeof CompanyCoursesRoute
+  '/company/interns': typeof CompanyInternsRoute
   '/company/opportunities': typeof CompanyOpportunitiesRoute
   '/company/students': typeof CompanyStudentsRoute
   '/student/applications': typeof StudentApplicationsRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/college/students'
     | '/company/analytics'
     | '/company/courses'
+    | '/company/interns'
     | '/company/opportunities'
     | '/company/students'
     | '/student/applications'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
     | '/college/students'
     | '/company/analytics'
     | '/company/courses'
+    | '/company/interns'
     | '/company/opportunities'
     | '/company/students'
     | '/student/applications'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/college/students'
     | '/company/analytics'
     | '/company/courses'
+    | '/company/interns'
     | '/company/opportunities'
     | '/company/students'
     | '/student/applications'
@@ -368,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompanyOpportunitiesRouteImport
       parentRoute: typeof CompanyRoute
     }
+    '/company/interns': {
+      id: '/company/interns'
+      path: '/interns'
+      fullPath: '/company/interns'
+      preLoaderRoute: typeof CompanyInternsRouteImport
+      parentRoute: typeof CompanyRoute
+    }
     '/company/courses': {
       id: '/company/courses'
       path: '/courses'
@@ -431,6 +450,7 @@ const CollegeRouteWithChildren =
 interface CompanyRouteChildren {
   CompanyAnalyticsRoute: typeof CompanyAnalyticsRoute
   CompanyCoursesRoute: typeof CompanyCoursesRoute
+  CompanyInternsRoute: typeof CompanyInternsRoute
   CompanyOpportunitiesRoute: typeof CompanyOpportunitiesRoute
   CompanyStudentsRoute: typeof CompanyStudentsRoute
   CompanyIndexRoute: typeof CompanyIndexRoute
@@ -439,6 +459,7 @@ interface CompanyRouteChildren {
 const CompanyRouteChildren: CompanyRouteChildren = {
   CompanyAnalyticsRoute: CompanyAnalyticsRoute,
   CompanyCoursesRoute: CompanyCoursesRoute,
+  CompanyInternsRoute: CompanyInternsRoute,
   CompanyOpportunitiesRoute: CompanyOpportunitiesRoute,
   CompanyStudentsRoute: CompanyStudentsRoute,
   CompanyIndexRoute: CompanyIndexRoute,
