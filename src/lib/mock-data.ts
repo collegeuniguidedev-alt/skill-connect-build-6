@@ -368,3 +368,89 @@ export const collegeInternshipMonitor = {
   ] as CollegeInternshipRow[],
 };
 
+// ============================================================
+// Company-side: partner colleges enrolled with the company
+// ============================================================
+
+export type PartnerCollege = {
+  id: string;
+  name: string;
+  location: string;
+  status: "active" | "onboarding" | "renewal_due";
+  mou: "signed" | "pending" | "expiring";
+  interns: number;
+  candidates: number;
+  since: string;
+};
+
+export const companyPartnerColleges: PartnerCollege[] = [
+  { id: "pc_river", name: "Riverside University", location: "Bengaluru", status: "active", mou: "signed", interns: 18, candidates: 142, since: "2023" },
+  { id: "pc_north", name: "Northgate Institute of Technology", location: "Pune", status: "active", mou: "signed", interns: 12, candidates: 96, since: "2024" },
+  { id: "pc_stel", name: "St. Elmo College of Design", location: "Mumbai", status: "renewal_due", mou: "expiring", interns: 6, candidates: 41, since: "2022" },
+  { id: "pc_kova", name: "Kovai School of Engineering", location: "Coimbatore", status: "onboarding", mou: "pending", interns: 0, candidates: 58, since: "2026" },
+];
+
+// ============================================================
+// College-side: AI Risk panel, company feedback, health score, insights
+// ============================================================
+
+export type RiskStudent = {
+  id: string;
+  name: string;
+  department: string;
+  company: string;
+  reason: string;
+};
+
+export const collegeRiskBoard = {
+  atRisk: [
+    { id: "rr1", name: "Rohan Mehta", department: "Computer Science", company: "Helix AI", reason: "No submission in 4 days, missed 2 stand-ups" },
+    { id: "rr2", name: "Priya Shah", department: "Business", company: "Northwind Studio", reason: "Mentor rating dropped from 4.2 → 2.8" },
+  ] as RiskStudent[],
+  fallingBehind: [
+    { id: "fb1", name: "Aria Chen", department: "Mechanical Engineering", company: "Forge Robotics", reason: "Behind on weekly deliverables; last task reworked 2×" },
+    { id: "fb2", name: "Kabir Anand", department: "Computer Science", company: "Acme Analytics", reason: "Attendance dipped to 74% this fortnight" },
+    { id: "fb3", name: "Neha Rao", department: "Design", company: "St. Elmo Studio", reason: "Submissions on time but AI review flags shallow depth" },
+  ] as RiskStudent[],
+  onTrack: 41,
+};
+
+export type CompanyFeedback = {
+  id: string;
+  student: string;
+  company: string;
+  mentor: string;
+  rating: number;
+  attendance: number;
+  skillDelta: number;
+  comment: string;
+  week: string;
+};
+
+export const collegeCompanyFeedback: CompanyFeedback[] = [
+  { id: "cf1", student: "Maya Patel", company: "Acme Analytics", mentor: "Priya Rao", rating: 4.7, attendance: 98, skillDelta: 22, comment: "Excellent SQL depth. Ready for stakeholder-facing dashboards.", week: "Week 4" },
+  { id: "cf2", student: "Leo Garcia", company: "Northwind Studio", mentor: "David Kim", rating: 4.4, attendance: 95, skillDelta: 18, comment: "Strong visual craft, needs more rigour in user research write-ups.", week: "Week 4" },
+  { id: "cf3", student: "Aria Chen", company: "Forge Robotics", mentor: "Rahul Nair", rating: 3.2, attendance: 82, skillDelta: 6, comment: "Concept understanding is good but delivery is slow — schedule 1:1.", week: "Week 4" },
+  { id: "cf4", student: "Sana Iyer", company: "Helix AI", mentor: "Meera Joshi", rating: 4.8, attendance: 100, skillDelta: 27, comment: "Top of cohort. Recommending for pre-placement offer.", week: "Week 4" },
+];
+
+export const collegeHealthScore = {
+  overall: 92,
+  breakdown: [
+    { key: "engagement", label: "Student engagement", value: 94 },
+    { key: "satisfaction", label: "Company satisfaction", value: 90 },
+    { key: "tasks", label: "Task completion", value: 89 },
+    { key: "attendance", label: "Attendance", value: 93 },
+    { key: "feedback", label: "Mentor feedback", value: 91 },
+  ],
+};
+
+export const collegeAiInsights: string[] = [
+  "18 students have not submitted work this week.",
+  "Company Helix AI has not reviewed interns for 8 days.",
+  "45 students are excelling in AI-related projects.",
+  "Mechanical students are receiving consistently higher mentor ratings than previous cohorts.",
+  "3 companies logged 5-star feedback on Riverside interns this fortnight.",
+];
+
+
