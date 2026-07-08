@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus, Users, Award } from "lucide-react";
+import { Plus, Users, Award, GraduationCap } from "lucide-react";
 import { useAppState } from "@/lib/app-state";
-import { company, courses, opportunities } from "@/lib/mock-data";
+import { company, companyPartnerColleges, courses, opportunities } from "@/lib/mock-data";
+
 
 export const Route = createFileRoute("/company/")({
   head: () => ({ meta: [{ title: "Company · LaunchPad" }] }),
