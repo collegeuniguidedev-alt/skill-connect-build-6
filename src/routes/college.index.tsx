@@ -1,6 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Target, Briefcase, CalendarCheck, ClipboardCheck } from "lucide-react";
-import { college, collegeOutcomes } from "@/lib/mock-data";
+import { Target, Briefcase, CalendarCheck, ClipboardCheck, Activity, AlertCircle, Building2, HeartPulse, Sparkles, Users } from "lucide-react";
+import {
+  college,
+  collegeAiInsights,
+  collegeCompanyFeedback,
+  collegeHealthScore,
+  collegeInternshipMonitor,
+  collegeOutcomes,
+  collegeRiskBoard,
+} from "@/lib/mock-data";
 
 export const Route = createFileRoute("/college/")({
   head: () => ({ meta: [{ title: "College · LaunchPad" }] }),
