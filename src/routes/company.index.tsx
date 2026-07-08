@@ -106,6 +106,68 @@ function CompanyOverview() {
         </div>
       </section>
 
+      <section>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="flex items-center gap-2 text-lg font-semibold">
+            <GraduationCap className="size-5 text-muted-foreground" /> Colleges enrolled with us
+          </h2>
+          <span className="text-xs text-muted-foreground">
+            {companyPartnerColleges.length} partners · {companyPartnerColleges.reduce((s, c) => s + c.interns, 0)} interns placed
+          </span>
+        </div>
+        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+          <table className="w-full text-sm">
+            <thead className="bg-secondary/60 text-xs uppercase tracking-wider text-muted-foreground">
+              <tr>
+                <th className="px-4 py-3 text-left">College</th>
+                <th className="px-4 py-3 text-left">Status</th>
+                <th className="px-4 py-3 text-left">MoU</th>
+                <th className="px-4 py-3 text-right">Interns</th>
+                <th className="px-4 py-3 text-right">Talent pool</th>
+                <th className="px-4 py-3 text-right">Partner since</th>
+              </tr>
+            </thead>
+            <tbody>
+              {companyPartnerColleges.map((p) => {
+                const statusStyle: Record<string, string> = {
+                  active: "bg-emerald-100 text-emerald-800",
+                  onboarding: "bg-sky-100 text-sky-800",
+                  renewal_due: "bg-amber-100 text-amber-800",
+                };
+                const mouStyle: Record<string, string> = {
+                  signed: "bg-emerald-50 text-emerald-700",
+                  pending: "bg-sky-50 text-sky-700",
+                  expiring: "bg-amber-50 text-amber-700",
+                };
+                return (
+                  <tr key={p.id} className="border-t border-border">
+                    <td className="px-4 py-3">
+                      <div className="font-medium">{p.name}</div>
+                      <div className="text-xs text-muted-foreground">{p.location}</div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${statusStyle[p.status]}`}>
+                        {p.status.replace("_", " ")}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${mouStyle[p.mou]}`}>
+                        {p.mou}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-right font-medium">{p.interns}</td>
+                    <td className="px-4 py-3 text-right text-muted-foreground">{p.candidates}</td>
+                    <td className="px-4 py-3 text-right text-muted-foreground">{p.since}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+
 
       <div className="grid gap-8 md:grid-cols-2">
         <section>
