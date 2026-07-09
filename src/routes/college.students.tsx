@@ -25,7 +25,12 @@ function CollegeStudents() {
           <div className="col-span-2 text-right">Progress</div>
         </div>
         {college.roster.map((r) => (
-          <div key={r.id} className="grid grid-cols-12 items-center gap-4 border-t border-border px-4 py-3">
+          <Link
+            key={r.id}
+            to="/college/students/$id"
+            params={{ id: r.id }}
+            className="grid grid-cols-12 items-center gap-4 border-t border-border px-4 py-3 transition-colors hover:bg-secondary/40"
+          >
             <div className="col-span-4 flex items-center gap-3">
               <div className="flex size-9 items-center justify-center rounded-full bg-secondary text-xs font-semibold">
                 {r.name.split(" ").map((n) => n[0]).join("")}
@@ -41,7 +46,7 @@ function CollegeStudents() {
               <div className="text-sm font-semibold">{r.progress}%</div>
               <div className="text-xs text-muted-foreground">{r.status}</div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

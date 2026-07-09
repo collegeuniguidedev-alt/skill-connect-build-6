@@ -66,17 +66,29 @@ function CollegeOverview() {
         </div>
         <div className="grid gap-4 md:grid-cols-5">
           {[
-            { label: "Students placed", value: 208, tone: "text-emerald-600" },
-            { label: "Companies onboarded", value: collegeInternshipMonitor.companies, tone: "text-sky-700" },
-            { label: "Active internships", value: collegeInternshipMonitor.activeInternships, tone: "text-foreground" },
+            { label: "Students placed", value: 208, tone: "text-emerald-600", to: "/college/students" as const },
+            { label: "Companies onboarded", value: collegeInternshipMonitor.companies, tone: "text-sky-700", to: "/college/companies" as const },
+            { label: "Active internships", value: collegeInternshipMonitor.activeInternships, tone: "text-foreground", to: "/college/internships" as const },
             { label: "Awaiting allocation", value: 34, tone: "text-amber-600" },
             { label: "Completion", value: `${Math.round((collegeInternshipMonitor.completionReady / collegeInternshipMonitor.activeInternships) * 100)}%`, tone: "text-violet-600" },
-          ].map((s) => (
-            <div key={s.label} className="rounded-xl border border-border bg-card p-5 shadow-sm">
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">{s.label}</div>
-              <div className={`mt-2 text-3xl font-semibold ${s.tone}`}>{s.value}</div>
-            </div>
-          ))}
+          ].map((s) => {
+            const inner = (
+              <>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">{s.label}</div>
+                <div className={`mt-2 text-3xl font-semibold ${s.tone}`}>{s.value}</div>
+                {s.to && <div className="mt-2 text-[11px] text-muted-foreground">View details →</div>}
+              </>
+            );
+            return s.to ? (
+              <Link key={s.label} to={s.to} className="rounded-xl border border-border bg-card p-5 shadow-sm transition-colors hover:border-foreground/30">
+                {inner}
+              </Link>
+            ) : (
+              <div key={s.label} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </section>
 
