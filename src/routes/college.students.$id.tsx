@@ -182,9 +182,224 @@ function StudentDetail() {
           </div>
         </section>
       )}
+
+      <DeepInsights name={name} />
     </div>
   );
 }
+
+function DeepInsights({ name }: { name: string }) {
+  const insights = getStudentInsights(name);
+  const maxTrend = Math.max(...insights.weeklyTrend.map((w) => w.score));
+
+  return (
+    <div className="space-y-8 border-t border-border pt-8">
+      <div className="flex items-center gap-2">
+        <Zap className="size-5 text-sky-600" />
+        <h2 className="text-xl font-semibold tracking-tight">Deeper insights</h2>
+        <span className="rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-sky-800">AI generated</span>
+      </div>
+
+      {/* PPO readiness + velocity summary */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            <Award className="size-4" /> PPO readiness
+          </div>
+          <div className="mt-2 text-3xl font-semibold text-emerald-600">{insights.ppoReadiness}%</div>
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-secondary">
+            <div className="h-full bg-emerald-500" style={{ width: `${insights.ppoReadiness}%` }} />
+          </div>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Blended score across evaluations, mentor rating, and skill delta.
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            <TrendingUp className="size-4" /> Learning velocity
+          </div>
+          <div className="mt-2 text-3xl font-semibold">
+            {insights.velocity.tasksPerWeek}
+            <span className="ml-1 text-sm font-normal text-muted-foreground">tasks/wk</span>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Cohort avg {insights.velocity.cohortTasksPerWeek}/wk · +{insights.velocity.skillGrowthPerMonth} skill pts / month
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            <Activity className="size-4" /> Engagement
+          </div>
+          <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+            <Metric label="Login streak" value={`${insights.engagement.loginStreak}d`} />
+            <Metric label="Response" value={`${insights.engagement.avgResponseHrs}h`} />
+            <Metric label="Submit rate" value={`${insights.engagement.submissionRate}%`} />
+            <Metric label="Peer reviews" value={`${insights.engagement.peerReviews}`} />
+          </div>
+        </div>
+      </div>
+
+      {/* Skill breakdown + weekly trend */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            <Target className="size-4" /> Skill breakdown
+          </div>
+          <div className="mt-4 space-y-3">
+            {insights.skills.map((s) => (
+              <div key={s.label}>
+                <div className="flex items-baseline justify-between text-sm">
+                  <span className="font-medium">{s.label}</span>
+                  <span className="text-muted-foreground">
+                    {s.score} <span className="text-emerald-600">+{s.delta}</span>
+                  </span>
+                </div>
+                <div className="mt-1 h-2 overflow-hidden rounded-full bg-secondary">
+                  <div className="h-full bg-sky-500" style={{ width: `${s.score}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            <TrendingUp className="size-4" /> Weekly performance
+          </div>
+          <div className="mt-6 flex h-40 items-end gap-3">
+            {insights.weeklyTrend.map((w) => (
+              <div key={w.week} className="flex flex-1 flex-col items-center gap-2">
+                <div className="text-xs font-semibold">{w.score}</div>
+                <div
+                  className="w-full rounded-t-md bg-gradient-to-t from-sky-500 to-sky-300"
+                  style={{ height: `${(w.score / maxTrend) * 100}%` }}
+                />
+                <div className="text-xs text-muted-foreground">{w.week}</div>
+                <div className="text-[10px] text-muted-foreground">{w.tasks} tasks</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Cohort benchmark */}
+      <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+        <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+          <Users2 className="size-4" /> Cohort benchmark
+        </div>
+        <div className="mt-4 space-y-4">
+          {insights.benchmark.map((b) => {
+            const ahead = b.student >= b.cohort;
+            return (
+              <div key={b.metric}>
+                <div className="flex items-baseline justify-between text-sm">
+                  <span className="font-medium">{b.metric}</span>
+                  <span className={ahead ? "text-emerald-600" : "text-amber-600"}>
+                    {b.student} <span className="text-muted-foreground">· cohort {b.cohort}</span>
+                  </span>
+                </div>
+                <div className="relative mt-1 h-2 overflow-hidden rounded-full bg-secondary">
+                  <div className="h-full bg-sky-500" style={{ width: `${b.student}%` }} />
+                  <div
+                    className="absolute top-0 h-full w-0.5 bg-foreground/70"
+                    style={{ left: `${b.cohort}%` }}
+                    title={`Cohort ${b.cohort}`}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Strengths / Gaps / Recommendations */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <InsightList
+          title="Strengths"
+          items={insights.strengths}
+          icon={<Award className="size-4 text-emerald-600" />}
+          tone="bg-emerald-50 border-emerald-200"
+        />
+        <InsightList
+          title="Gaps to close"
+          items={insights.gaps}
+          icon={<AlertTriangle className="size-4 text-amber-600" />}
+          tone="bg-amber-50 border-amber-200"
+        />
+        <InsightList
+          title="AI recommendations"
+          items={insights.recommendations}
+          icon={<Lightbulb className="size-4 text-sky-600" />}
+          tone="bg-sky-50 border-sky-200"
+        />
+      </div>
+
+      {/* Timeline */}
+      <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+        <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+          <CalendarCheck className="size-4" /> Milestones timeline
+        </div>
+        <ol className="mt-4 space-y-3">
+          {insights.milestones.map((m, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <div
+                className={`mt-1.5 size-2 shrink-0 rounded-full ${
+                  m.type === "win"
+                    ? "bg-emerald-500"
+                    : m.type === "flag"
+                    ? "bg-rose-500"
+                    : "bg-sky-500"
+                }`}
+              />
+              <div className="flex-1 text-sm">
+                <div className="font-medium">{m.label}</div>
+                <div className="text-xs text-muted-foreground">{m.date}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md bg-secondary/60 px-2 py-1.5">
+      <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
+      <div className="text-sm font-semibold">{value}</div>
+    </div>
+  );
+}
+
+function InsightList({
+  title,
+  items,
+  icon,
+  tone,
+}: {
+  title: string;
+  items: string[];
+  icon: React.ReactNode;
+  tone: string;
+}) {
+  return (
+    <div className={`rounded-xl border p-4 ${tone}`}>
+      <div className="flex items-center gap-2 text-sm font-semibold">
+        {icon} {title}
+      </div>
+      <ul className="mt-3 space-y-2 text-sm">
+        {items.map((it, i) => (
+          <li key={i} className="flex gap-2">
+            <span className="mt-1.5 size-1 shrink-0 rounded-full bg-foreground/40" />
+            <span>{it}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 
 export function slugify(s: string) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
