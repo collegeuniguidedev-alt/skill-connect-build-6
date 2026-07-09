@@ -1,12 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Building2, GraduationCap, Activity, ClipboardCheck, Star, CalendarCheck } from "lucide-react";
+import { ArrowLeft, Building2, GraduationCap, Activity, ClipboardCheck, Star, CalendarCheck, TrendingUp, Zap, Target, Award, AlertTriangle, Lightbulb, Users2 } from "lucide-react";
 import {
   college,
   collegeCompanyFeedback,
   collegeInternshipMonitor,
   collegeRiskBoard,
   companyInternshipOps,
+  getStudentInsights,
 } from "@/lib/mock-data";
+
 
 export const Route = createFileRoute("/college/students/$id")({
   head: () => ({ meta: [{ title: "Student detail · College" }] }),
