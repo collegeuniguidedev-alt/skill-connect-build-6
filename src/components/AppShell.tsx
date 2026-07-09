@@ -137,6 +137,7 @@ const navByPersona: Record<Persona, { label: string; to: string; exact?: boolean
     { label: "Overview", to: "/college", exact: true },
     { label: "Internship Monitor", to: "/college/internships" },
     { label: "Students", to: "/college/students" },
+    { label: "Companies", to: "/college/companies" },
     { label: "Analytics", to: "/college/analytics" },
   ],
 };
