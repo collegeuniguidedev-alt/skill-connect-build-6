@@ -453,4 +453,100 @@ export const collegeAiInsights: string[] = [
   "3 companies logged 5-star feedback on Riverside interns this fortnight.",
 ];
 
+// ============================================================
+// Deep per-student insights (deterministic mock)
+// ============================================================
+
+export type StudentInsights = {
+  skills: { label: string; score: number; delta: number }[];
+  weeklyTrend: { week: string; score: number; tasks: number }[];
+  engagement: {
+    loginStreak: number;
+    avgResponseHrs: number;
+    submissionRate: number;
+    peerReviews: number;
+  };
+  benchmark: { metric: string; student: number; cohort: number }[];
+  velocity: {
+    tasksPerWeek: number;
+    cohortTasksPerWeek: number;
+    skillGrowthPerMonth: number;
+  };
+  milestones: { date: string; label: string; type: "win" | "flag" | "note" }[];
+  strengths: string[];
+  gaps: string[];
+  recommendations: string[];
+  ppoReadiness: number;
+};
+
+function hash(s: string) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+export function getStudentInsights(name: string): StudentInsights {
+  const h = hash(name);
+  const pick = (min: number, max: number, salt = 0) =>
+    min + (((h >> salt) & 0xff) % (max - min + 1));
+
+  const base = pick(60, 88);
+  const flag = pick(0, 1, 30) === 0;
+  return {
+    skills: [
+      { label: "Technical depth", score: base + pick(-8, 8, 1), delta: pick(2, 14, 2) },
+      { label: "Communication", score: base + pick(-10, 6, 3), delta: pick(1, 10, 4) },
+      { label: "Problem solving", score: base + pick(-6, 10, 5), delta: pick(2, 12, 6) },
+      { label: "Collaboration", score: base + pick(-12, 8, 7), delta: pick(0, 8, 8) },
+      { label: "Ownership", score: base + pick(-8, 10, 9), delta: pick(1, 11, 10) },
+    ].map((s) => ({ ...s, score: Math.max(35, Math.min(99, s.score)) })),
+    weeklyTrend: [
+      { week: "W1", score: pick(55, 70, 11), tasks: pick(3, 5, 12) },
+      { week: "W2", score: pick(60, 78, 13), tasks: pick(4, 6, 14) },
+      { week: "W3", score: pick(65, 84, 15), tasks: pick(4, 7, 16) },
+      { week: "W4", score: pick(70, 92, 17), tasks: pick(5, 8, 18) },
+    ],
+    engagement: {
+      loginStreak: pick(4, 21, 19),
+      avgResponseHrs: pick(1, 8, 20),
+      submissionRate: pick(72, 98, 21),
+      peerReviews: pick(3, 14, 22),
+    },
+    benchmark: [
+      { metric: "Task quality", student: pick(70, 95, 23), cohort: 78 },
+      { metric: "Submission timeliness", student: pick(65, 98, 24), cohort: 82 },
+      { metric: "Mentor rating", student: pick(60, 96, 25), cohort: 80 },
+      { metric: "Skill growth", student: pick(55, 95, 26), cohort: 74 },
+    ],
+    velocity: {
+      tasksPerWeek: pick(4, 8, 27),
+      cohortTasksPerWeek: 5,
+      skillGrowthPerMonth: pick(6, 22, 28),
+    },
+    milestones: [
+      { date: "Jun 03", label: "Onboarded to internship program", type: "note" },
+      { date: "Jun 12", label: `Completed foundation assessment (score ${pick(72, 94, 29)})`, type: "win" },
+      { date: "Jun 21", label: "First mentor 1:1 — positive feedback", type: "win" },
+      { date: "Jun 28", label: flag ? "Missed one weekly submission" : "Shipped first stakeholder-facing deliverable", type: flag ? "flag" : "win" },
+      { date: "Jul 05", label: "Mid-internship review scheduled", type: "note" },
+    ],
+    strengths: [
+      "Consistently high task quality on analytical work",
+      "Strong written updates to mentors",
+      "Picks up new tools quickly (last 30 days: +2 tools)",
+    ],
+    gaps: [
+      "Peer review participation below cohort median",
+      "Occasional lag in end-of-week reflections",
+    ],
+    recommendations: [
+      "Pair with a senior intern for shadowing on stakeholder calls",
+      "Enroll in advanced module: 'Data storytelling for execs'",
+      "Schedule fortnightly checkpoint with faculty advisor",
+    ],
+    ppoReadiness: pick(55, 92, 31),
+  };
+}
+
+
 
